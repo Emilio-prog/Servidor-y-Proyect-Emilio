@@ -23,12 +23,18 @@ public class Servidor {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-            // 4. Leer un mensaje del cliente
-            String mensajeCliente = in.readLine();
-            System.out.println("Mensaje del cliente: " + mensajeCliente);
+            //Recepción y Descifrado
+            String mensajeRecibido = in.readLine();
+            System.out.println("Recibido (Cifrado): " + mensajeRecibido);
 
-            // 5. Enviar una respuesta al cliente
-            out.println("Hola, cliente. Recibí tu mensaje: " + mensajeCliente);
+            // 1. Desciframos el mensaje
+            String mensajeDescifrado = CifradoAES.descifrar(mensajeRecibido);
+
+            // 2. Mostramos el mensaje real
+            System.out.println("Mensaje Descifrado (Original): " + mensajeDescifrado);
+
+            //Responder al cliente
+            out.println("Mensaje recibido y descifrado correctamente.");
 
             // 6. Cerrar los recursos
             in.close();
